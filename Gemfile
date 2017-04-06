@@ -22,6 +22,10 @@ gem 'bootstrap-will_paginate', '0.0.10'
 group :development, :test do
   gem 'sqlite3', '1.3.11'
   gem 'byebug',  '9.0.0', platform: :mri
+  gem 'rspec-rails'
+  gem 'factory_girl_rails'
+  gem 'database_rewinder'
+  gem 'pry-rails'
 end
 
 group :development do
