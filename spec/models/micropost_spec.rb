@@ -1,29 +1,32 @@
 require 'rails_helper'
 
 RSpec.describe Micropost, type: :model do
-  let(:user) { FactoryGirl.create(:michael) }
+  let(:user) { FactoryGirl.create(:user) }
 
   describe '#valid?' do
     let(:micropost) { FactoryGirl.build(:micropost, params) }
+    shared_examples 'invalid' do
+      it { expect(micropost).to be_invalid }
+    end
 
     context "has user id" do
       let(:params) { {content: "Hi", user: user} }
       it { expect(micropost).to be_valid }
     end
 
-    context "user id should be present" do
+    context "user not present" do
       let(:params) { { content: "Hi", user_id: nil } }
-      it { expect(micropost).not_to be_valid }
+      it_behaves_like 'invalid'
     end
 
-    context "content should be present" do
+    context "content not present" do
       let(:params) { { content: "", user: user } }
-      it { expect(micropost).not_to be_valid }
+      it_behaves_like 'invalid'
     end
 
-    context "content should be at most 140 characters" do
+    context "content over 140 characters" do
       let(:params) { { content: "a" * 141, user: user }}
-      it { expect(micropost).not_to be_valid }
+      it_behaves_like 'invalid'
     end
   end
 
